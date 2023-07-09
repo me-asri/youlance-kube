@@ -32,7 +32,7 @@ remove:
 
 expose:
 	@echo [*] Exposing front service
-	kubectl -n youlance port-forward deploy/front 8080:80
+	kubectl -n youlance port-forward deploy/front 80:80
 
 status:
 	kubectl -n youlance get deploy
