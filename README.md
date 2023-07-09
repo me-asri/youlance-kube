@@ -29,8 +29,10 @@ $ make auth
 ```
 $ make remove
 ```
+> This is equivalent to removing the `youlance` namespace
 
 ### Exposing front service
 ```
 $ make expose
 ```
+> This will expose front service on `http://127.0.0.1:8080`
