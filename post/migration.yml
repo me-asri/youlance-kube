@@ -5,12 +5,28 @@ metadata:
   name: post-db-migration
   namespace: youlance
 spec:
-  ttlSecondsAfterFinished: 100
+  ttlSecondsAfterFinished: 30
   template:
     spec:
       containers:
         - name: migration
           image: vafatarighi/youlance-post:latest
-          command:
-            ["scripts/init_db", "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+          command: ["scripts/init_db.sh"]
+          env:
+            - name: SKIP_DOCKER
+              value: "1"
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: post-db-user
+                  key: db-user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: post-db-user
+                  key: db-pass
+            - name: POSTGRES_DB
+              value: youlance_posts
+            - name: POSTGRES_ADDR
+              value: post-db
       restartPolicy: Never
