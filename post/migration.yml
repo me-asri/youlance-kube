@@ -1,0 +1,16 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: post-db-migration
+  namespace: youlance
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      containers:
+        - name: migration
+          image: vafatarighi/youlance-post:latest
+          command:
+            ["scripts/init_db", "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never

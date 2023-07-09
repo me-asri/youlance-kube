@@ -1,0 +1,83 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: post-db-pvc
+  namespace: youlance
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: post-db-user
+  namespace: youlance
+type: Opaque
+stringData:
+  db-user: youlance
+  db-pass: Las93SZbLRvfrukEvOSMCNAzx
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: post-db
+  namespace: youlance
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: post-db
+  template:
+    metadata:
+      labels:
+        app: post-db
+    spec:
+      containers:
+        - name: post-db
+          image: postgres:15-alpine
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: post-db-user
+                  key: db-user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: post-db-user
+                  key: db-pass
+            - name: POSTGRES_DB
+              value: youlance_posts
+          volumeMounts:
+            - mountPath: /var/lib/postgresql
+              name: database
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5432
+      volumes:
+        - name: database
+          persistentVolumeClaim:
+            claimName: post-db-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: post-db
+  namespace: youlance
+spec:
+  selector:
+    app: post-db
+  ports:
+    - port: 5432
+      targetPort: 5432

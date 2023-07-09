@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feed-config
+  namespace: youlance
+data:
+  base.yaml: |-
+    application:
+      port: 80
+    poster_client:
+      base_url: "http://post"
+      path: "latest"
+    user_client:
+      base_url: "http://user"
+      count_path: "followees/count"
+      fetch_path: "followees"
+  production.yaml: |-
+    application:
+      host: "0.0.0.0"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed
+  namespace: youlance
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: feed
+  template:
+    metadata:
+      labels:
+        app: feed
+    spec:
+      containers:
+        - name: feed
+          image: vafatarighi/youlance-feed:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          volumeMounts:
+            - mountPath: /app/configuration/
+              name: feed-settings
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 15
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+      volumes:
+        - name: feed-settings
+          configMap:
+            name: feed-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: feed
+  namespace: youlance
+spec:
+  selector:
+    app: feed
+  ports:
+    - port: 80
+      targetPort: 80
