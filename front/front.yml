@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: front
-          image: vafatarighi/youlance-ui
+          image: vafatarighi/youlance-ui:latest
           env:
             - name: NODE_URL
               value: http://localhost
