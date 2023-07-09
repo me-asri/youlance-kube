@@ -19,7 +19,7 @@ spec:
           image: vafatarighi/youlance-ui
           env:
             - name: NODE_URL
-              value: http://127.0.0.1:8080
+              value: http://localhost
             - name: NODE_PORT
               value: "80"
             - name: NODE_CLIENT_AUTH
@@ -53,3 +53,4 @@ spec:
   ports:
     - port: 80
       targetPort: 80
+  type: LoadBalancer
