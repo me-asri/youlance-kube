@@ -2,7 +2,7 @@ ifeq ($(OS),Windows_NT)
 	SHELL := cmd
 endif
 
-.PHONY: all ns auth user feed front remove status status-pods
+.PHONY: all ns auth user feed front remove expose status status-pods
 
 all: ns auth user feed front
 
