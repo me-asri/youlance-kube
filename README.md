@@ -24,3 +24,13 @@ $ make
 $ make auth
 ```
 > Make sure `youalance` namespace exists if deploying a specific service.
+
+### Removing all services
+```
+$ make remove
+```
+
+### Exposing front service
+```
+$ make expose
+```
