@@ -2,13 +2,17 @@ ifeq ($(OS),Windows_NT)
 	SHELL := cmd
 endif
 
-.PHONY: all ns auth user feed front post profile remove expose status status-pods
+.PHONY: all ns ingress auth user feed front post profile remove expose status status-pods
 
-all: ns auth user feed front post profile
+all: ns ingress auth user feed front post profile
 
 ns:
-	@echo Creating youlance namespace
+	@echo [*] Creating youlance namespace
 	-kubectl create ns youlance
+
+ingress:
+	@echo [*] Deploying ingress
+	make -C ingress
 
 auth:
 	@echo [*] Deploying auth service

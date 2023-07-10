@@ -54,7 +54,7 @@ spec:
                   name: post-db-user
                   key: db-pass
             - name: POSTGRES_DB
-              value: youlance_posts
+              value: poster
           volumeMounts:
             - mountPath: /var/lib/postgresql
               name: database

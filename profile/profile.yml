@@ -16,28 +16,26 @@ spec:
     spec:
       containers:
         - name: profile
-          image: measri/youlance-profile:latest
+          image: measri/youlance-profile:2.0
           env:
-            - name: APPPORT
+            - name: APP_PORT
               value: "80"
-            - name: PGUSER
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: profile-db-user
                   key: db-user
-            - name: PGPASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: profile-db-user
                   key: db-pass
-            - name: PGADDRESS
+            - name: POSTGRES_ADDRESS
               value: profile-db
-            - name: PGNAME
+            - name: POSTGRES_DB
               value: youlance_profiles
-            - name: PGPORT
+            - name: POSTGRES_PORT
               value: "5432"
-            - name: AUTHSERVICEADDR
-              value: http://auth
           resources:
             limits:
               memory: "128Mi"

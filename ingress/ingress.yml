@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: youlance-ingress
+  namespace: youlance
+  labels:
+    name: youlance-ingress
+  annotations:
+    nginx.org/client-max-body-size: "32m"
+    nginx.org/rewrites: "serviceName=post rewrite=/" # Rewrite /api/post/... to /...
+    nginx.ingress.kubernetes.io/preserve-trailing-slash: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: kubernetes.docker.internal
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: front
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: "/api/post/"
+            backend:
+              service:
+                name: post
+                port:
+                  number: 80

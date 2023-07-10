@@ -26,7 +26,7 @@ spec:
                   name: post-db-user
                   key: db-pass
             - name: POSTGRES_DB
-              value: youlance_posts
+              value: poster
             - name: POSTGRES_ADDR
               value: post-db
       restartPolicy: Never

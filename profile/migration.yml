@@ -10,22 +10,22 @@ spec:
     spec:
       containers:
         - name: migration
-          image: measri/youlance-profile:latest
+          image: measri/youlance-profile:2.0
           env:
             - name: SKIP_DOCKER
               value: "1"
-            - name: PGADDRESS
+            - name: POSTGRES_ADDRESS
               value: profile-db
-            - name: PGPORT
+            - name: POSTGRES_PORT
               value: "5432"
-            - name: PGNAME
+            - name: POSTGRES_DB
               value: youlance_profiles
-            - name: PGUSER
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: profile-db-user
                   key: db-user
-            - name: PGPASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: profile-db-user
