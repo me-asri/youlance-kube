@@ -5,11 +5,30 @@ metadata:
   name: profile-db-migration
   namespace: youlance
 spec:
-  ttlSecondsAfterFinished: 100
+  ttlSecondsAfterFinished: 30
   template:
     spec:
       containers:
         - name: migration
-          image: mehrddy/profileservice:1.0
-          command: [] # TODO
+          image: measri/youlance-profile:latest
+          env:
+            - name: SKIP_DOCKER
+              value: "1"
+            - name: PGADDRESS
+              value: profile-db
+            - name: PGPORT
+              value: "5432"
+            - name: PGNAME
+              value: youlance_profiles
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: profile-db-user
+                  key: db-user
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: profile-db-user
+                  key: db-pass
+          command: ["./init_db.sh"]
       restartPolicy: Never

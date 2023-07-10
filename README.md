@@ -7,7 +7,7 @@ K8s manifest files for youlance project
 - [x] Front service
 - [x] Feed service
 - [x] Post service
-- [ ] Profile service
+- [x] Profile service
 
 ## Deployment
 A simple Makefile is provided to ease deploying services

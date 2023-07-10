@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: profile
-          image: mehrddy/profileservice:1.0
+          image: measri/youlance-profile:latest
           env:
             - name: APPPORT
               value: "80"
@@ -30,8 +30,14 @@ spec:
                 secretKeyRef:
                   name: profile-db-user
                   key: db-pass
-            - name: DB_ADDRESS
-              value: user-db:5432
+            - name: PGADDRESS
+              value: profile-db
+            - name: PGNAME
+              value: youlance_profiles
+            - name: PGPORT
+              value: "5432"
+            - name: AUTHSERVICEADDR
+              value: http://auth
           resources:
             limits:
               memory: "128Mi"

@@ -26,6 +26,13 @@ spec:
               value: http://auth
             - name: NODE_CLIENT_USER
               value: http://user
+            - name: NODE_CLIENT_PROFILE
+              value: http://profile
+            - name: NODE_CLIENT_POST
+              value: http://post
+            - name: NODE_CLIENT_FEED
+              value: http://feed
+
           resources:
             limits:
               memory: "128Mi"
