@@ -2,9 +2,9 @@ ifeq ($(OS),Windows_NT)
 	SHELL := cmd
 endif
 
-.PHONY: all ns auth user feed front post remove expose status status-pods
+.PHONY: all ns auth user feed front post profile remove expose status status-pods
 
-all: ns auth user feed front post
+all: ns auth user feed front post profile
 
 ns:
 	@echo Creating youlance namespace
@@ -29,6 +29,10 @@ front:
 post:
 	@echo [*] Deploying post service
 	make -C post
+
+profile:
+	@echo [*] Deploying profile service
+	make -C profile
 
 remove:
 	@echo [*] Removing youlance services
