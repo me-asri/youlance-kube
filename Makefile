@@ -8,7 +8,7 @@ all: ns auth user feed front post profile
 
 ns:
 	@echo Creating youlance namespace
-	kubectl create ns youlance
+	-kubectl create ns youlance
 
 auth:
 	@echo [*] Deploying auth service
